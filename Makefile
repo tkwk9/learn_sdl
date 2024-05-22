@@ -14,5 +14,14 @@ main.o: main.cpp
 glad.o: $(GLAD_SRC_DIR)/glad.c
 	clang++ -c $(GLAD_SRC_DIR)/glad.c -o glad.o -I$(GLAD_INCLUDE_DIR)
 
+debug: main_debug.o glad_debug.o
+	g++ -g main_debug.o glad_debug.o -o $(APP_NAME) -F$(FRAMEWORKS_DIR) -framework SDL2 -Wl,-rpath,$(FRAMEWORKS_DIR)
+
+main_debug.o: main.cpp
+	g++ -g -c main.cpp -o main_debug.o -I$(FRAMEWORKS_DIR)/SDL2.framework/Headers -I$(GLAD_INCLUDE_DIR) -F$(FRAMEWORKS_DIR) -framework SDL2
+
+glad_debug.o: $(GLAD_SRC_DIR)/glad.c
+	g++ -g -c $(GLAD_SRC_DIR)/glad.c -o glad_debug.o -I$(GLAD_INCLUDE_DIR)
+
 clean:
-	rm -f $(APP_NAME) main.o glad.o
+	rm -f $(APP_NAME) main.o glad.o main_debug.o glad_debug.o
