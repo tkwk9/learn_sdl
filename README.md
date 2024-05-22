@@ -1,5 +1,12 @@
 Learn SDL2
 
+Build main
+
+```
+make
+./main
+```
+
 Debug
 
 ```
